@@ -14,7 +14,7 @@ set_target_properties(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         AsyncDispatcherLib
-        #CONAN_PKG::gtest
+        CONAN_PKG::gtest
 )
 
 gtest_discover_tests(${PROJECT_NAME}
