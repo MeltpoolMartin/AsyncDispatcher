@@ -1,5 +1,7 @@
 #include "AsyncDispatcher/AsyncDispatcher.hpp"
 
+#include <iostream>
+
 AsyncDispatcher::AsyncDispatcher() : m_stop(false) {
   m_threadWorker = std::thread([this] { workerThread(); });
 }
@@ -23,11 +25,12 @@ void AsyncDispatcher::dispatchFunc(std::function<void()> func) {
 }
 
 void AsyncDispatcher::workerThread() {
-  std::unique_lock<std::mutex> lock(m_mutexWorker);
   do {
+    std::unique_lock<std::mutex> lock(m_mutexWorker);
     m_condVarWorker.wait(lock, [this] { return m_stop || m_queue.size() > 0; });
     if (m_queue.size() > 0) {
       auto func = std::move(m_queue.front());
+      m_queue.pop();
       func();
     }
   } while (m_stop != true);
