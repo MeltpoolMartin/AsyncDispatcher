@@ -10,6 +10,7 @@ class AsyncDispatcher {
   AsyncDispatcher();
   virtual ~AsyncDispatcher();
   void dispatchFunc(std::function<void()> func);
+  void resyncWithFunc();
 
  private:
   void stop();
@@ -19,6 +20,7 @@ class AsyncDispatcher {
   std::condition_variable m_condVarWorker;
   std::thread m_threadWorker;
   bool m_stop;
+  bool m_forcedSync;
 };
 
 #endif

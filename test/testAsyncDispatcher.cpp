@@ -8,10 +8,12 @@ TEST(AsyncDispatcherTestSuite, Constructor_CheckConstructionAndDestruction) {
   auto task = [](int taskNumber) {
     std::cout << "task " << taskNumber << " with thread ID " << std::this_thread::get_id()
               << std::endl;
-    // std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::this_thread::sleep_for(std::chrono::seconds(1));
   };
   asyncDispatcher.dispatchFunc([&task] { task(1); });
   asyncDispatcher.dispatchFunc([&task] { task(2); });
-  std::this_thread::sleep_for(std::chrono::milliseconds(50));
+  asyncDispatcher.resyncWithFunc();
+  asyncDispatcher.dispatchFunc([&task] { task(3); });
   EXPECT_TRUE(true);
+  std::cout << "Main function leaves scope" << std::endl;
 }
