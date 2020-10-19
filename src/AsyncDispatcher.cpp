@@ -13,13 +13,13 @@ AsyncDispatcher::~AsyncDispatcher() {
 
 void AsyncDispatcher::stop() {
   m_stop = true;
-  m_condVarWorker.notify_all();  // check if notify_one() is sufficient
+  m_condVarWorker.notify_one();
 }
 
 void AsyncDispatcher::dispatchFunc(std::function<void()> func) {
   std::lock_guard<std::mutex> lock(m_mutexWorker);
   m_queue.push(std::move(func));  // check with emplace
-  m_condVarWorker.notify_all();
+  m_condVarWorker.notify_one();
 }
 
 void AsyncDispatcher::workerThread() {
@@ -33,7 +33,7 @@ void AsyncDispatcher::workerThread() {
     }
     if (m_queue.size() == 0) {
       m_forcedSync = true;
-      m_condVarWorker.notify_all();
+      m_condVarWorker.notify_one();
     }
   } while (m_stop != true);
 }
