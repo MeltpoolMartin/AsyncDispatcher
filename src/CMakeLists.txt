@@ -5,8 +5,8 @@ project(AsyncDispatcherLib
 )
 
 add_library(${PROJECT_NAME} STATIC  
-    ${CMAKE_SOURCE_DIR}/src/include/AsyncDispatcher/AsyncDispatcher.hpp
-    ${CMAKE_SOURCE_DIR}/src/src/AsyncDispatcher.cpp
+    ${CMAKE_SOURCE_DIR}/include/AsyncDispatcher/AsyncDispatcher.hpp
+    ${CMAKE_SOURCE_DIR}/src/AsyncDispatcher.cpp
 )
 
 set_target_properties(${PROJECT_NAME}
@@ -17,7 +17,7 @@ set_target_properties(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} 
     PUBLIC
-        ${CMAKE_SOURCE_DIR}/include/AsyncDispatcher
+        ${CMAKE_SOURCE_DIR}/include
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
