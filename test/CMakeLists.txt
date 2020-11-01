@@ -8,7 +8,8 @@ add_executable(testAsyncDispatcher
 
 set_target_properties(${PROJECT_NAME}
 	PROPERTIES
-		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/test/${CMAKE_BUILD_TYPE}"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/test/${CMAKE_BUILD_TYPE}"
+        CXX_CLANG_TIDY ${CLANG_TIDY_COMMAND}
 )
 
 target_link_libraries(${PROJECT_NAME}
